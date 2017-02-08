@@ -40,5 +40,5 @@ service postgresql restart
 
 su - postgres -c "createuser -s codeit"
 su - postgres -c "psql -c \"ALTER ROLE codeit PASSWORD 'codeit'\""
-su - postgres -c "createdb -O codeit -EUTF-8 codeit"
-su - postgres -c "createdb -O codeit -EUTF-8 codeit"
+su - postgres -c "createdb -O codeit -EUTF-8 codeit_dev"
+su - postgres -c "createdb -O codeit -EUTF-8 codeit_test"
