@@ -1,3 +1,5 @@
+.idea/
+.DS_STORE
 .envrc
 *.log
 /target
