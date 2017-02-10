@@ -8,6 +8,7 @@
             [ajax.core :refer [GET POST]]
             [codeit.ajax :refer [load-interceptors!]]
             [codeit.handlers]
+            [codeit.login :as login]
             [codeit.subscriptions])
   (:import goog.History))
 
@@ -46,7 +47,8 @@
 
 (def pages
   {:home #'home-page
-   :about #'about-page})
+   :about #'about-page
+   :login #'login/login-page})
 
 (defn page []
   [:div
@@ -62,6 +64,9 @@
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+(secretary/defroute "/login" []
+                    (rf/dispatch [:set-active-page :login]))
 
 ;; -------------------------
 ;; History
