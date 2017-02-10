@@ -1,4 +1,13 @@
-(ns codeit.login)
+(ns codeit.login
+  (:require [codeit.validation :as validation]
+    [ajax.core :refer [GET POST]]))
+
+(defn login []
+  (let [username (.-value (.getElementById js/document "user-id")) password (.-value (.getElementById js/document "password"))]
+    (POST "http://brokers.financeone.com.au/api/token"
+          {;:body (str "username="  "&password=")
+           :body    (js/encodeURI (str "username=" username "&password=" password))
+           :handler #(js/alert %)})))
 
 (defn login-page []
   [:div.container
