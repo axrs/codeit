@@ -9,6 +9,7 @@
             [codeit.ajax :refer [load-interceptors!]]
             [codeit.handlers]
             [codeit.login :as login]
+            [codeit.home :as home]
             [codeit.subscriptions])
   (:import goog.History))
 
@@ -49,7 +50,7 @@
              {:__html (md->html docs)}}]])])
 
 (def pages
-  {:home #'home-page
+  {:home #'home/home-page
    :about #'about-page
    :login #'login/login-page})
 
@@ -57,7 +58,10 @@
   [:div
    [navbar]
    [(if @(rf/subscribe [:token])
-      (pages @(rf/subscribe [:page]))
+      (if (= :login @(rf/subscribe [:page]))
+        (do (rf/dispatch [:logout nil])
+            (pages :login))
+        (pages @(rf/subscribe [:page])))
       (pages :login))]])
 
 ;; -------------------------

@@ -17,6 +17,9 @@
   (do (rf/dispatch [:set-token (get-in response ["access_token"])])
       (secretary/dispatch! "#/")))
 
+(defn fake-login! [flash login-btn]
+      (login-handler! {"access_token" "LKJHLJHGLJGLJKB"}))
+
 (defn login! [flash login-btn]
   (let [username (.-value (username-input)) password (.-value (password-input))]
     (POST "http://brokers.financeone.com.au/api/token"
@@ -52,7 +55,7 @@
                   (when-let [flash-msg @flash]
                     [:small.flash flash-msg])
                   [:button.btn.btn-info.centered-button {:disabled (:disabled @login-btn)
-                                                         :type "submit"
+                                                         :type "button"
                                                          :on-click #(do (swap! login-btn assoc :text "Please wait")
-                                                                        (login! flash login-btn))}
+                                                                        (fake-login! flash login-btn))}
                    (:text @login-btn)]]]]]))

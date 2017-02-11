@@ -85,3 +85,7 @@ small.flash {
 .btn-logout {
     float: right;
 }
+
+.menu-btn {
+    border: 2px solid #0275D8;
+}
