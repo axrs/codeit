@@ -30,7 +30,10 @@
       [:a.navbar-brand {:href "#/"} "codeit"]
       [:ul.nav.navbar-nav
        [nav-link "#/" "Home" :home collapsed?]
-       [nav-link "#/about" "About" :about collapsed?]]]]))
+       [nav-link "#/about" "About" :about collapsed?]]
+      (when @(rf/subscribe [:token])
+        [:button.btn.btn-danger.btn-logout {:on-click #(rf/dispatch [:logout nil])}
+         "Logout"])]]))
 
 (defn about-page []
   [:div.container
@@ -53,7 +56,9 @@
 (defn page []
   [:div
    [navbar]
-   [(pages @(rf/subscribe [:page]))]])
+   [(if @(rf/subscribe [:token])
+      (pages @(rf/subscribe [:page]))
+      (pages :login))]])
 
 ;; -------------------------
 ;; Routes

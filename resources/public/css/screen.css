@@ -75,3 +75,13 @@ body {
     display: block;
     margin: auto;
 }
+
+small.flash {
+    padding-bottom: 1em;
+    color: indianred;
+    display: block;
+}
+
+.btn-logout {
+    float: right;
+}
