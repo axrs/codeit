@@ -10,3 +10,8 @@
   :docs
   (fn [db _]
     (:docs db)))
+
+(reg-sub
+  :token
+  (fn [db _]
+    (:token db)))

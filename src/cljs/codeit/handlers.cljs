@@ -16,3 +16,13 @@
   :set-docs
   (fn [db [_ docs]]
     (assoc db :docs docs)))
+
+(reg-event-db
+  :set-token
+  (fn [db [_ token]]
+    (assoc db :token token)))
+
+(reg-event-db
+  :logout
+  (fn [db [_ _]]
+    (assoc db :token nil)))

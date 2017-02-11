@@ -15,3 +15,4 @@ profiles.clj
 .nrepl-port
 /log
 .vagrant
+/codeit.iml

@@ -8,6 +8,8 @@
             [ajax.core :refer [GET POST]]
             [codeit.ajax :refer [load-interceptors!]]
             [codeit.handlers]
+            [codeit.login :as login]
+            [codeit.home :as home]
             [codeit.subscriptions])
   (:import goog.History))
 
@@ -29,7 +31,10 @@
       [:a.navbar-brand {:href "#/"} "codeit"]
       [:ul.nav.navbar-nav
        [nav-link "#/" "Home" :home collapsed?]
-       [nav-link "#/about" "About" :about collapsed?]]]]))
+       [nav-link "#/about" "About" :about collapsed?]]
+      (when @(rf/subscribe [:token])
+        [:button.btn.btn-danger.btn-logout {:on-click #(rf/dispatch [:logout nil])}
+         "Logout"])]]))
 
 (defn about-page []
   [:div.container
@@ -45,13 +50,19 @@
              {:__html (md->html docs)}}]])])
 
 (def pages
-  {:home #'home-page
-   :about #'about-page})
+  {:home #'home/home-page
+   :about #'about-page
+   :login #'login/login-page})
 
 (defn page []
   [:div
    [navbar]
-   [(pages @(rf/subscribe [:page]))]])
+   [(if @(rf/subscribe [:token])
+      (if (= :login @(rf/subscribe [:page]))
+        (do (rf/dispatch [:logout nil])
+            (pages :login))
+        (pages @(rf/subscribe [:page])))
+      (pages :login))]])
 
 ;; -------------------------
 ;; Routes
@@ -62,6 +73,9 @@
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+(secretary/defroute "/login" []
+                    (rf/dispatch [:set-active-page :login]))
 
 ;; -------------------------
 ;; History

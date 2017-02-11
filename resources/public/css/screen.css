@@ -67,3 +67,25 @@ body {
     }
 }
 
+.centered-header {
+    text-align: center;
+}
+
+.centered-button {
+    display: block;
+    margin: auto;
+}
+
+small.flash {
+    padding-bottom: 1em;
+    color: indianred;
+    display: block;
+}
+
+.btn-logout {
+    float: right;
+}
+
+.menu-btn {
+    border: 2px solid #0275D8;
+}
